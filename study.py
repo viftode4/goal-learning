@@ -3,11 +3,15 @@
 import argparse
 import json
 import re
+import shutil
 from collections import Counter
 from pathlib import Path
 
 COVERAGE = {'not_started', 'introduced', 'worked_example', 'practiced'}
 EVIDENCE = {'unknown', 'guided', 'independent', 'transferable', 'durable'}
+STRONG_EVIDENCE = {'independent', 'transferable', 'durable'}
+PURPOSES = ('coverage', 'explore', 'practice', 'refresh')
+RESULTS = ('correct', 'partially_correct', 'incorrect', 'ungradable', 'not_assessed')
 
 
 def nonempty(value):
@@ -76,7 +80,148 @@ def validate(data):
         questions = topic.get('practice_questions', [])
         if not isinstance(questions, list) or not all(map(nonempty, questions)):
             errors.append(f'{tid}: practice_questions must be a list of strings.')
+        if topic.get('importance', 'normal') not in ('low', 'normal', 'high'):
+            errors.append(f'{tid}: importance must be low, normal, or high.')
+        prerequisites = topic.get('prerequisites', [])
+        if not isinstance(prerequisites, list) or not all(map(nonempty, prerequisites)):
+            errors.append(f'{tid}: prerequisites must be topic IDs.')
+    if errors:
+        return errors
+    by_id = {t['id']: t for t in topics}
+    for topic in topics:
+        for dependency in topic.get('prerequisites', []):
+            if dependency not in ids or by_id[dependency]['scope'] != 'included':
+                errors.append(f"{topic['id']}: prerequisite {dependency!r} must be an included topic.")
+    if errors:
+        return errors
+    visiting, visited = set(), set()
+
+    def visit(tid):
+        if tid in visiting:
+            errors.append(f'{tid}: cyclic prerequisites.')
+            return
+        if tid in visited:
+            return
+        visiting.add(tid)
+        for dependency in by_id[tid].get('prerequisites', []):
+            visit(dependency)
+        visiting.remove(tid)
+        visited.add(tid)
+
+    for tid in ids:
+        visit(tid)
+    observations = data.get('observations', [])
+    if not isinstance(observations, list):
+        return errors + ['observations must be a chronological list.']
+    event_ids = set()
+    for event in observations:
+        if not isinstance(event, dict):
+            errors.append('Each observation must be an object.')
+            continue
+        eid = event.get('id')
+        if not nonempty(eid) or eid in event_ids:
+            errors.append('Each observation needs a unique id.')
+        if nonempty(eid):
+            event_ids.add(eid)
+        if not nonempty(event.get('topic_id')) or event['topic_id'] not in ids:
+            errors.append(f'{eid}: unknown observation topic.')
+        if event.get('purpose') not in PURPOSES or event.get('result') not in RESULTS:
+            errors.append(f'{eid}: invalid observation purpose or result.')
+        if event.get('purpose') == 'coverage' and event.get('result') != 'not_assessed':
+            errors.append(f'{eid}: teaching coverage must use not_assessed, not a learner grade.')
+        hints = event.get('hint_level')
+        if type(hints) is not int or not 0 <= hints <= 5:
+            errors.append(f'{eid}: hint_level must be an integer from 0 to 5.')
+        if not nonempty(event.get('record_ref')):
+            errors.append(f'{eid}: record_ref must locate the real response or teaching record.')
     return errors
+
+
+def plan(data):
+    """Recommend one activity without writing evidence or pretending to optimize learning."""
+    errors = validate(data)
+    if errors:
+        raise ValueError('; '.join(errors))
+    if not data['inventory_reviewed']:
+        return {'action': 'reconcile_inventory', 'reason': 'Inspect the full source/task map before allocating topics.'}
+    unresolved = [t['id'] for t in data['topics'] if t['scope'] == 'unknown']
+    if unresolved:
+        return {'action': 'resolve_scope', 'topics': unresolved,
+                'reason': 'Unresolved scope cannot be silently discarded.'}
+    included = {t['id']: t for t in data['topics'] if t['scope'] == 'included'}
+    events = data.get('observations', [])
+    latest, last_check = {}, {}
+    for index, event in enumerate(events):
+        # A worked example or ungradable question is not evidence of ability.
+        if event['purpose'] != 'coverage' and event['result'] in ('correct', 'partially_correct', 'incorrect'):
+            latest[event['topic_id']] = (index, event)
+            last_check[event['topic_id']] = index
+    candidates, blocked = [], []
+    for tid, topic in included.items():
+        unmet = [d for d in topic.get('prerequisites', [])
+                 if included[d]['evidence'] not in STRONG_EVIDENCE
+                 or (d in latest and (latest[d][1]['result'] != 'correct'
+                                      or latest[d][1]['hint_level'] > 0))]
+        if unmet:
+            blocked.append({'topic_id': tid, 'unmet_prerequisites': unmet})
+            continue
+        recent = latest.get(tid)
+        event = recent[1] if recent else None
+        if topic['coverage'] in ('not_started', 'introduced'):
+            purpose, need = 'coverage', 3
+            reason = 'Required material still needs an explanation and complete example.'
+        elif event and event['result'] in ('partially_correct', 'incorrect'):
+            purpose, need = 'practice', 3
+            reason = 'The latest graded response shows a specific weakness; repair it, then retry.'
+        elif (topic['evidence'] not in STRONG_EVIDENCE or not event
+              or event['hint_level'] > 0):
+            purpose, need = 'explore', 2
+            reason = 'Independent ability is uncertain; use a fresh, fair check of taught material.'
+        else:
+            purpose, need = 'refresh', 0
+            reason = 'Sample apparently strong knowledge with a fresh check; no forgetting is assumed.'
+        # Fresh teaching resets coverage recency, but it cannot replace an independent check.
+        if purpose == 'coverage':
+            appearances = [i for i, e in enumerate(events) if e['topic_id'] == tid]
+            last_index = appearances[-1] if appearances else -1
+        else:
+            last_index = last_check.get(tid, -1)
+        age = len(events) - last_index - 1
+        importance = {'low': 1, 'normal': 2, 'high': 3}[topic.get('importance', 'normal')]
+        candidates.append({'topic_id': tid, 'purpose': purpose,
+                           'score': importance + need + age,
+                           'terms': {'importance': importance, 'need': need,
+                                     'intervening_observations': age}, 'reason': reason})
+    candidates.sort(key=lambda c: (-c['score'], c['topic_id']))
+    return {'action': 'study' if candidates else 'review_goal_scope',
+            'recommended': candidates[0] if candidates else None,
+            'candidates': candidates, 'blocked': blocked,
+            'coverage_gaps': [t['id'] for t in included.values()
+                              if t['coverage'] in ('not_started', 'introduced')],
+            'limits': 'Heuristic scores are not probabilities, UCB bounds, or mastery. '
+                      'No ledger changes. Elapsed observations are not elapsed days. '
+                      'Inspect actual records and goal criteria before acting.'}
+
+
+def bundle(destination):
+    """Export only the reusable files; never copy personal learning records."""
+    root = Path(__file__).resolve().parent
+    destination = destination.resolve()
+    if destination == root or root in destination.parents:
+        raise ValueError('Export outside the source repository to avoid recursive or private copies.')
+    destination.mkdir(parents=True, exist_ok=False)
+    for name in ('README.md', 'AGENTS.md', 'CLAUDE.md', 'LICENSE', '.gitignore', 'study.py'):
+        shutil.copyfile(root / name, destination / name)
+    for name in ('docs', 'templates', 'examples', 'evals', 'THIRD_PARTY_NOTICES'):
+        shutil.copytree(root / name, destination / name)
+    skill_path = root / 'skills/goal-learning/SKILL.md'
+    if not skill_path.exists():
+        skill_path = root / 'SKILL.md'  # An exported skill can be exported again.
+    skill = skill_path.read_text().replace('../../', '')
+    (destination / 'SKILL.md').write_text(skill)
+    for path in destination.rglob('*.md'):
+        path.write_text(path.read_text().replace('skills/goal-learning/SKILL.md', 'SKILL.md'))
+    return destination
 
 
 def audit(data):
@@ -117,10 +262,14 @@ def main():
     init.add_argument('slug')
     init.add_argument('--title', required=True)
     init.add_argument('--goal', required=True)
-    for name in ('status', 'audit'):
+    for name in ('status', 'audit', 'plan'):
         sub.add_parser(name).add_argument('ledger', type=Path)
+    sub.add_parser('bundle', help='Export a self-contained skill without personal data').add_argument('destination', type=Path)
     args = parser.parse_args()
     try:
+        if args.command == 'bundle':
+            print(f'Exported portable skill to {bundle(args.destination)}')
+            return 0
         if args.command == 'init':
             if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', args.slug):
                 parser.error('slug must contain lowercase words/digits separated by hyphens')
@@ -132,11 +281,14 @@ def main():
             (target / 'materials').mkdir()
             (target / 'sessions').mkdir()
             data = {'title': args.title, 'goal': args.goal, 'success_criteria': [],
-                    'inventory_reviewed': False, 'sources': [], 'topics': []}
+                    'inventory_reviewed': False, 'sources': [], 'topics': [], 'observations': []}
             (target / 'course.json').write_text(json.dumps(data, indent=2) + '\n')
             print(f'Created {target}. Define criteria and inventory before teaching.')
             return 0
         data = json.loads(args.ledger.read_text())
+        if args.command == 'plan':
+            print(json.dumps(plan(data), indent=2))
+            return 0
         problems = validate(data) if args.command == 'status' else audit(data)
         if problems:
             print('\n'.join(f'- {issue}' for issue in problems))

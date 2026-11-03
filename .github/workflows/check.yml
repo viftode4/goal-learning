@@ -12,3 +12,4 @@ jobs:
           python-version: '3.10'
       - run: python -m unittest discover -s tests -v
       - run: python study.py status examples/course.json
+      - run: python study.py plan examples/allocation.json

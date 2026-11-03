@@ -35,6 +35,10 @@ In particular, a worked example is a minimum delivered-coverage threshold in thi
 
 Mastery-learning and deliberate-practice traditions are upstream inspiration. The original session used targeted correction, but it was not a controlled mastery-learning program or an expert-supervised deliberate-practice intervention. No outcome improvement has been attributed to these labels.
 
+## Allocation policy added after the retrospective
+
+The exploration/exploitation discussion led to [TOPIC-ALLOCATION.md](TOPIC-ALLOCATION.md). Coverage remains obligatory; uncertain knowledge is probed, demonstrated weaknesses receive practice, and apparently strong topics are sampled periodically. The score and its activity-count aging are new engineering heuristics, not UCB, a validated learning reward, or a finding from the cited papers. Automated tests check recommendation behavior; comparative learning effectiveness remains untested.
+
 ## Proposed next evaluation
 
 Use small learning goals with observable outputs. Preserve baseline and final independent tasks, record hints, and perform a later check. Audit topic omissions against the source outlines independently of practice questions. Evaluate the tutor against the bundled behavioral cases. Measure failures and repair cost, not just friendliness or practice scores. No controlled comparison or delayed-retention result for Goal Learning exists yet.

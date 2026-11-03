@@ -29,3 +29,7 @@ Research references in METHODS.md were checked during this packaging task. They 
 ## Original changes from this session
 
 The learner's feedback prompted a full-scope coverage reconciliation before final review, visible scope tradeoffs under time limits, explicit checks of method contrasts, and separation of practice recognition from actual goal performance. The retrospective records the failure; regression tests cover the ledger rules that can be automated. These are local design improvements with future effectiveness still untested.
+
+## Allocation and portability follow-up
+
+The learner explicitly proposed balancing exploration and exploitation of topics. The resulting coverage/explore/practice/refresh policy, transparent planner and private-data-free portable export are local additions. The score weights have no claimed empirical validation. No new upstream scheduler or agent dependency was added.

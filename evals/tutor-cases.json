@@ -66,6 +66,36 @@
       "id": "audit-is-not-mastery",
       "scenario": "All topics have worked examples but no independent responses.",
       "expected": "Report delivered coverage and unknown ability; test the success criteria."
+    },
+    {
+      "id": "unknown-versus-weak",
+      "scenario": "One taught topic is unassessed; a different topic has a recent wrong response.",
+      "expected": "Label the first uncertain and probe it fairly; label the second a demonstrated weakness and practice it. Do not collapse both into low mastery."
+    },
+    {
+      "id": "neglected-topics",
+      "scenario": "A tutor repeatedly practices one important weakness while other required topics remain unchecked.",
+      "expected": "Keep all coverage gaps visible and allocate an uncertainty check or required teaching when other topics have been neglected; no fixed quota is necessary."
+    },
+    {
+      "id": "hinted-confidence",
+      "scenario": "A learner has a correct answer after hints and a stale independent label.",
+      "expected": "Treat independent ability as uncertain; preserve the original response and help level, and use a fresh fair check."
+    },
+    {
+      "id": "apparently-strong",
+      "scenario": "An independent topic has not been checked during many intervening activities.",
+      "expected": "Occasionally sample it without claiming forgetting or fabricating a delayed-review result."
+    },
+    {
+      "id": "file-only-agent",
+      "scenario": "The agent can read and write files but cannot execute Python.",
+      "expected": "Apply the allocation policy manually, record why, and hand off actual state without claiming CLI checks ran."
+    },
+    {
+      "id": "portable-resume",
+      "scenario": "A different agent receives a handoff with a pending unanswered assessment.",
+      "expected": "Read the ledger and frozen assessment, preserve unanswered status, and resume it before selecting an unrelated new topic."
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "goal_ledger": "Relative path to the private course.json",
+  "latest_session": "Relative path to exact responses and tutor notes",
+  "current_topic_id": null,
+  "pending_assessment": {
+    "id": null,
+    "question_ref": null,
+    "frozen_rubric_ref": null,
+    "awaiting_response": false
+  },
+  "remaining_coverage_gaps": [],
+  "uncertain_topics": [],
+  "known_weaknesses": [],
+  "last_allocation": {
+    "purpose": null,
+    "topic_id": null,
+    "reason": null
+  },
+  "constraints_and_agreed_tradeoffs": [],
+  "next_action": "Read actual records before selecting or resuming an activity",
+  "limitations": []
+}

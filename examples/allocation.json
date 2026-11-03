@@ -1,0 +1,102 @@
+{
+  "title": "Synthetic allocation example",
+  "inventory_reviewed": true,
+  "sources": [
+    {
+      "id": "syllabus",
+      "location": "Your syllabus, section 2"
+    },
+    {
+      "id": "lecture-1",
+      "location": "Your lecture 1, pages 1\u201312"
+    }
+  ],
+  "topics": [
+    {
+      "id": "new-material",
+      "title": "New Material",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: synthetic section"
+      ],
+      "coverage": "not_started",
+      "evidence": "unknown",
+      "evidence_ref": "",
+      "importance": "normal",
+      "prerequisites": [],
+      "practice_questions": []
+    },
+    {
+      "id": "uncertain",
+      "title": "Uncertain",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: synthetic section"
+      ],
+      "coverage": "worked_example",
+      "evidence": "guided",
+      "evidence_ref": "synthetic-record",
+      "importance": "high",
+      "prerequisites": [],
+      "practice_questions": []
+    },
+    {
+      "id": "known-weakness",
+      "title": "Known Weakness",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: synthetic section"
+      ],
+      "coverage": "practiced",
+      "evidence": "guided",
+      "evidence_ref": "synthetic-record",
+      "importance": "high",
+      "prerequisites": [],
+      "practice_questions": []
+    },
+    {
+      "id": "apparently-strong",
+      "title": "Apparently Strong",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: synthetic section"
+      ],
+      "coverage": "practiced",
+      "evidence": "independent",
+      "evidence_ref": "synthetic-record",
+      "importance": "normal",
+      "prerequisites": [],
+      "practice_questions": []
+    }
+  ],
+  "goal": "Compare methods and solve fresh tasks independently",
+  "success_criteria": [
+    "Explain and apply each method independently"
+  ],
+  "observations": [
+    {
+      "id": "synthetic-1",
+      "topic_id": "apparently-strong",
+      "purpose": "explore",
+      "result": "correct",
+      "hint_level": 0,
+      "record_ref": "synthetic-record"
+    },
+    {
+      "id": "synthetic-2",
+      "topic_id": "known-weakness",
+      "purpose": "practice",
+      "result": "incorrect",
+      "hint_level": 0,
+      "record_ref": "synthetic-record"
+    },
+    {
+      "id": "synthetic-3",
+      "topic_id": "uncertain",
+      "purpose": "explore",
+      "result": "correct",
+      "hint_level": 2,
+      "record_ref": "synthetic-record"
+    }
+  ]
+}

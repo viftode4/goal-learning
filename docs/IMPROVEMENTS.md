@@ -6,6 +6,8 @@
 - Audit unknown scope, shallow topics and undocumented exclusions even when every sample question is passed.
 - Keep personal course data local and synthetic examples public.
 - Bundle the teaching protocol, source audit, research links, retrospective and behavioral evaluation cases.
+- Balance coverage, uncertain ability, demonstrated weaknesses and occasional refresh with a transparent read-only planner and validated prerequisites/observations.
+- Export a self-contained skill with no private records; document file-only and chat-only fallbacks and shared handoff.
 - Regression-test the deterministic ledger rules. Passing tests only supports those rules, not tutor quality.
 
 ## Next, before making the system larger
@@ -18,6 +20,6 @@
 
 ## Only after observed need
 
-Machine-readable evidence records could validate hint levels, dates, rubric versions and delayed intervals. Source adapters could flag untouched outline sections. A small dashboard could make gaps easier to inspect. None is implemented here; an interface would not solve an incomplete map or bad grading by itself.
+Observation metadata now validates topic IDs, purposes, results, hint levels and record references. Future evidence checks could validate dates, actual rubric versions and delayed intervals. Source adapters could flag untouched outline sections. A small dashboard could make gaps easier to inspect. None is implemented here; an interface would not solve an incomplete map or bad grading by itself.
 
 Success measures: fewer unrecorded scope omissions, fewer unfair questions, accurate distinction between guided and independent work, clean session resumption, and successful independent goal tasks and later recall. Satisfaction is useful feedback, not a substitute for these observations.

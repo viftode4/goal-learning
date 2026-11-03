@@ -5,6 +5,9 @@ Course and current topic:
 Sources actually checked (IDs and pages/sections):
 Coverage gaps and scope uncertainties:
 Available time and agreed priorities:
+Allocation purpose (coverage/explore/practice/refresh):
+Why this activity now, and any planner override:
+Other coverage gaps, uncertain ability and known weaknesses:
 
 ## Learner words
 

@@ -16,6 +16,10 @@ Record topic source IDs and page/section anchors. Map sample tasks to topics. Sa
 
 Use the time budget to prioritize transparently. When the full goal cannot fit, show what will be omitted or left shallow and ask the learner to choose a reduced outcome. Asking how far along we are is not a request to accelerate. Preserve an understandable pace and make partial completion visible.
 
+## Allocate the next activity
+
+Follow [TOPIC-ALLOCATION.md](TOPIC-ALLOCATION.md). Resolve scope and prerequisites, inspect required coverage gaps, then balance uncertainty checks and practice of known weaknesses. Sample apparently strong topics periodically. Use the read-only `plan` helper when available and record its recommendation or your reason for overriding it. Do not infer a weakness from a topic that has not been assessed.
+
 ## Teach one connected part
 
 Bridge from what the learner has demonstrated. Define unfamiliar terms, explain the mechanism, and work one complete example. Then ask a manageable question with a rubric frozen before delivery. Asking a beginner about unintroduced knowledge is a teaching failure, not evidence of poor learning. Prior knowledge can be diagnosed gently without treating untaught content as an exam failure.

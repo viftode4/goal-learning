@@ -10,6 +10,12 @@ Read README.md, skills/goal-learning/SKILL.md, docs/WORKFLOW.md, the current cou
 - Never silently narrow the user's requested scope. A time budget permits prioritization, not an undisclosed scope change. State omissions and implications and let the user choose a real tradeoff.
 - Check related methods, contrasts, assumptions and formula roles. For example, knowing matrix factorization does not establish understanding of decomposition versus optimization.
 
+## Choosing the next activity
+
+Follow docs/TOPIC-ALLOCATION.md. Preserve required coverage, distinguish unassessed ability from demonstrated weakness, and occasionally probe apparently strong topics. Use `python3 study.py plan <ledger>` when available; otherwise follow the policy manually. Respect prerequisites and any pending unanswered question. Record the selection purpose and reason; do not use a fixed exploration quota or let practice-paper frequency define importance. Planning is read-only and never changes mastery.
+
+For another agent or environment, use docs/AGENT-PORTABILITY.md and templates/HANDOFF.json.
+
 ## Teaching and assessment
 
 - Assume only the learner's demonstrated prerequisites. Define terms, connect to the previous idea, work a complete example, then ask one manageable check.

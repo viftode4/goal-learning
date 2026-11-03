@@ -11,6 +11,7 @@ Python 3.10+, no dependencies or API keys:
 ```sh
 python3 study.py init build-a-parser --title "Build a parser" --goal "Independently implement and explain a small expression parser"
 python3 study.py status courses/build-a-parser/course.json
+python3 study.py plan courses/build-a-parser/course.json
 python3 study.py audit courses/build-a-parser/course.json
 ```
 
@@ -24,17 +25,25 @@ Open this repository and say:
 
 [AGENTS.md](AGENTS.md) applies to Codex; [CLAUDE.md](CLAUDE.md) points Claude to the same instructions. Any assistant can follow the files directly. This repository does not change global agent configuration or install itself automatically.
 
-The [portable skill](skills/goal-learning/SKILL.md) uses the bundled documents. To install it in another skills directory, copy the **whole repository** to a stable location and symlink that directory's `goal-learning` entry to this repository's `skills/goal-learning`. Copying SKILL.md alone breaks its relative references. Keep the existing `learn-anything` skill separate; this one does not overwrite it.
+The [portable skill](skills/goal-learning/SKILL.md) can be used directly or exported as a self-contained folder:
+
+```sh
+python3 study.py bundle ../goal-learning-skill
+```
+
+Copy that entire folder into your agent's configured skills directory, or tell any agent to read its SKILL.md. No vendor-specific installation is required. File-only agents can follow the policy manually; chat-only agents need the relevant files supplied in the conversation. See [agent portability and handoffs](docs/AGENT-PORTABILITY.md). Automatic discovery and teaching quality vary by client; the exported file layout and CLI are tested.
 
 ## What is bundled
 
 - [Workflow](docs/WORKFLOW.md): goals, sources, prerequisites, teaching, evidence and resuming.
+- [Topic allocation](docs/TOPIC-ALLOCATION.md): required coverage, exploration, targeted practice and refresh, with transparent read-only recommendations.
+- [Agent portability](docs/AGENT-PORTABILITY.md) and a shared [handoff template](templates/HANDOFF.json).
 - [Provenance](docs/PROVENANCE.md): upstream projects, exact versions and what actually ran.
 - [Methods and sources](docs/METHODS.md): research basis, methods used, limits and untested proposals.
 - [Exam guide](docs/EXAM-WORKFLOW.md) and [RecSys retrospective](docs/RECSYS-RETROSPECTIVE.md).
 - [Improvement plan](docs/IMPROVEMENTS.md) and [behavioral evaluation cases](evals/tutor-cases.json).
 - [Session](templates/SESSION.md), [assessment](templates/ASSESSMENT.json) and [debrief](templates/DEBRIEF.md) templates.
-- A standard-library CLI for initialization, status and coverage checks. It does not grade answers or run spaced repetition.
+- A standard-library CLI for initialization, status, coverage checks, next-activity planning and portable export. It does not grade answers or run spaced repetition.
 
 ## What an audit means
 
