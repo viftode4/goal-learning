@@ -1,0 +1,10 @@
+# Course records and source material stay local by default.
+/courses/
+/private/
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+.DS_Store

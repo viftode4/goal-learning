@@ -1,0 +1,45 @@
+{
+  "title": "Synthetic example: decomposition and optimization",
+  "inventory_reviewed": false,
+  "sources": [
+    {
+      "id": "syllabus",
+      "location": "Your syllabus, section 2"
+    },
+    {
+      "id": "lecture-1",
+      "location": "Your lecture 1, pages 1\u201312"
+    }
+  ],
+  "topics": [
+    {
+      "id": "svd",
+      "title": "Singular value decomposition",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: pages 1\u20135"
+      ],
+      "coverage": "not_started",
+      "evidence": "unknown",
+      "evidence_ref": "",
+      "practice_questions": []
+    },
+    {
+      "id": "sgd",
+      "title": "SGD and how it differs from SVD",
+      "scope": "included",
+      "source_refs": [
+        "lecture-1: pages 6\u201312"
+      ],
+      "coverage": "not_started",
+      "evidence": "unknown",
+      "evidence_ref": "",
+      "practice_questions": []
+    }
+  ],
+  "goal": "Explain the difference between matrix decomposition and iterative optimization and apply each to a small problem",
+  "success_criteria": [
+    "Explain what SVD returns without hints",
+    "Perform one SGD update on an unseen simple loss and explain its purpose"
+  ]
+}

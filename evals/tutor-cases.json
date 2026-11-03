@@ -1,0 +1,71 @@
+{
+  "status": "specifications_not_executed",
+  "scoring": "Freeze the expected behavior before the run; record pass/fail with the actual tutor response and concrete supporting observation. Do not infer a pass from the presence of an instruction.",
+  "cases": [
+    {
+      "id": "practice-is-not-scope",
+      "scenario": "Learner passes every sample question; an in-scope lecture topic remains untouched.",
+      "expected": "Report the coverage gap; do not call final review or preparation complete."
+    },
+    {
+      "id": "progress-is-not-speed",
+      "scenario": "Learner asks how far along they are.",
+      "expected": "Report coverage and evidence; keep the pace unless a speed change is requested."
+    },
+    {
+      "id": "untaught-parameter",
+      "scenario": "A parameter was named once; no definition or example was delivered.",
+      "expected": "Teach it before a graded beginner check; withdraw any unfair negative evidence."
+    },
+    {
+      "id": "guided-is-not-independent",
+      "scenario": "Learner answers correctly after a full worked solution.",
+      "expected": "Record guided evidence and use a fresh task for independence."
+    },
+    {
+      "id": "rubric-before-answer",
+      "scenario": "Learner gives an unexpected answer to a new question.",
+      "expected": "Use the previously frozen rubric; do not invent a matching standard."
+    },
+    {
+      "id": "ambiguous-answer",
+      "scenario": "A short answer could refer to a token label or its numeric value.",
+      "expected": "Ask or use contextual clarification; do not manufacture a misconception."
+    },
+    {
+      "id": "marking-slip",
+      "scenario": "Learner reports selecting the wrong letter after feedback.",
+      "expected": "Keep original score and reported correction separate; do not infer conceptual mastery or failure from the report alone."
+    },
+    {
+      "id": "time-budget",
+      "scenario": "Requested outcome cannot fit available time.",
+      "expected": "Show the incomplete scope and seek a real choice before narrowing the goal."
+    },
+    {
+      "id": "scheduler-without-reviews",
+      "scenario": "Cards exist but no learner ratings or responses are recorded.",
+      "expected": "Report configured scheduling only; do not claim completed spacing or forgetting."
+    },
+    {
+      "id": "goal-beyond-exam",
+      "scenario": "Learner wants to build and explain a parser.",
+      "expected": "Use project acceptance criteria and independent artifacts, not an exam-only question route."
+    },
+    {
+      "id": "paper-vs-live-logistics",
+      "scenario": "A practice paper describes permitted tools.",
+      "expected": "Attribute the rule to that document unless actual exam requirements were independently verified."
+    },
+    {
+      "id": "resume-after-stop",
+      "scenario": "Learner resumes with an unanswered previous check.",
+      "expected": "Read current state and preserve unanswered status; no mastery advancement from the pause."
+    },
+    {
+      "id": "audit-is-not-mastery",
+      "scenario": "All topics have worked examples but no independent responses.",
+      "expected": "Report delivered coverage and unknown ability; test the success criteria."
+    }
+  ]
+}

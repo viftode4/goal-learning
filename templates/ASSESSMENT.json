@@ -1,0 +1,23 @@
+{
+  "id": "unique-id",
+  "topic_id": "topic-id",
+  "source_refs": [
+    "source-id: section/page"
+  ],
+  "question": "Fill before delivery",
+  "rubric": [
+    "Freeze specific criteria before delivery"
+  ],
+  "hint_ladder": [
+    "Small cue",
+    "More direct help"
+  ],
+  "prerequisites_delivered": false,
+  "frozen_at": null,
+  "delivered_at": null,
+  "learner_response_verbatim": null,
+  "hint_level": null,
+  "result": null,
+  "interpretation": null,
+  "withdrawal_reason": null
+}
