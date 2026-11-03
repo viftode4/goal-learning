@@ -1,39 +1,35 @@
-# Goal-oriented learning instructions
+# Agent entrypoint
 
-Read README.md, skills/goal-learning/SKILL.md, docs/WORKFLOW.md, the current course ledger, and its latest private session notes before teaching. Use one tutor at a time. Do not require any vendor-specific skill to use this repository.
+This repository is a goal-oriented tutoring protocol with optional Python helpers. Start here; the README is the human-facing concept overview. [agent-index.json](agent-index.json) provides the same task routing as structured data.
 
-## Coverage before teaching
+## Start or resume
 
-- Define the goal and observable success criteria. Inventory task requirements and authoritative sources; for exams include the full syllabus, every lecture/topic outline, tutorials, assignments and stated exam scope. Inspect outlines first; read detailed source pages as each topic is taught.
-- Map practice questions onto that inventory. A topic absent from a practice paper remains in scope unless authoritative evidence excludes it.
-- Keep source inventory, material coverage, teaching delivered in chat, and learner evidence distinct.
-- Never silently narrow the user's requested scope. A time budget permits prioritization, not an undisclosed scope change. State omissions and implications and let the user choose a real tradeoff.
-- Check related methods, contrasts, assumptions and formula roles. For example, knowing matrix factorization does not establish understanding of decomposition versus optimization.
+1. Read [the skill](skills/goal-learning/SKILL.md), the learner's ledger, latest handoff, and referenced session/assessment records. Reuse known goals and constraints. One tutor writes a goal at a time.
+2. Resume a pending unanswered assessment before selecting unrelated work. Otherwise inspect scope, prerequisites, coverage gaps and actual evidence, then choose one useful activity.
+3. Read only the references needed for the current task. Source details and future lesson content are loaded or prepared when needed.
 
-## Choosing the next activity
+| Task | Read |
+| --- | --- |
+| Set up a new goal | [Quickstart](docs/QUICKSTART.md), [workflow](docs/WORKFLOW.md) |
+| Select a topic or balance activities | [Allocation policy](docs/TOPIC-ALLOCATION.md) |
+| Operate the CLI or edit a ledger | [Commands and state](docs/AGENT-REFERENCE.md) |
+| Prepare for an exam | [Exam guide](docs/EXAM-WORKFLOW.md) |
+| Switch agents or export a skill | [Portability](docs/AGENT-PORTABILITY.md), [handoff template](templates/HANDOFF.json) |
+| Check a research claim or attribution | [Methods](docs/METHODS.md), [provenance](docs/PROVENANCE.md) |
+| Change the system | [Maintenance](docs/MAINTAINING.md), [behavioral cases](evals/tutor-cases.json) |
 
-Follow docs/TOPIC-ALLOCATION.md. Preserve required coverage, distinguish unassessed ability from demonstrated weakness, and occasionally probe apparently strong topics. Use `python3 study.py plan <ledger>` when available; otherwise follow the policy manually. Respect prerequisites and any pending unanswered question. Record the selection purpose and reason; do not use a fixed exploration quota or let practice-paper frequency define importance. Planning is read-only and never changes mastery.
+## Keep these invariants
 
-For another agent or environment, use docs/AGENT-PORTABILITY.md and templates/HANDOFF.json.
+- **Scope:** map the full goal and authoritative source outlines before choosing depth. Sample questions do not define coverage. State omissions and real time tradeoffs; never silently narrow the learner's request.
+- **Selection:** separate required teaching, uncertain ability, demonstrated weakness and refresh. Respect prerequisites. Record why an activity was chosen or a planner recommendation overridden; no fixed exploration quota.
+- **Teaching:** introduce unfamiliar terms and work a complete beginner example before a graded check. A generated lesson is not delivered teaching. Prepare only the current part. A progress question is not permission to accelerate.
+- **Assessment:** freeze source basis, rubric and hints before asking; reread that rubric before grading. Preserve exact responses separately from interpretation. Clarify ambiguity and distinguish marking slips from conceptual errors. Withdraw unfair questions and affected grades. Visually inspect answer markings or diagrams when extraction omits them.
+- **Evidence:** record actual help. Guided success is not independent; transfer and delayed recall need their own observations. Never fabricate responses, ratings or review events. Planning and audit passes never promote mastery.
+- **Completion:** reconcile sources manually and run `python3 study.py audit <ledger>` when available before calling coverage complete or entering final review. Then inspect actual independent goal evidence. Never promise a grade; verify actual exam logistics separately from practice-paper rules.
+- **Continuity:** save the exact position, pending question, uncertainties and next action. Pausing or restarting does not advance mastery. After an exam or project, preserve uncertain recollections as uncertain and improve the process from confirmed failures.
 
-## Teaching and assessment
+## Tools and repository boundaries
 
-- Assume only the learner's demonstrated prerequisites. Define terms, connect to the previous idea, work a complete example, then ask one manageable check.
-- A saved lesson is not delivered teaching. Never test an unintroduced concept as if it were taught. Withdraw unfair questions and their negative evidence.
-- Freeze a question, rubric and source basis before displaying it; preserve original versions. Grade actual responses, not inferred understanding. Visually inspect diagram-based answer keys when text extraction loses markings.
-- Preserve exact user answers separately from tutor interpretations. Ask about ambiguity rather than manufacturing a misconception. Retain marking slips separately from conceptual errors and original scores.
-- Track hints. Correct after coaching is guided evidence; an independent fresh answer is different. Transfer and delayed recall require their own observed responses.
-- If the user asks how much remains, report coverage and outstanding gaps. Do not speed up unless requested. Adapt the step size when confused.
-- Generate only the current teaching section and assessment; future topics remain a provisional route.
+Python is optional. If files or execution are unavailable, follow the manual/chat fallback in the portability guide and state what could not be verified. Do not require another skill, model, plugin or account.
 
-## Reporting and continuity
-
-- Run `python3 study.py audit <ledger>` before calling coverage complete or entering final review. A pass covers only declared topics; manually cross-check source completeness first.
-- Never promise a grade. Recognition on familiar practice questions is not a timed unseen exam or durable mastery.
-- Separate practice-paper instructions from independently verified actual-exam rules. Record source and verification date for logistics.
-- End with a concrete resume position, current uncertainties and next action. Save progress without advancing mastery when the learner pauses or asks for a restart.
-- After the exam, preserve the learner's report without inventing the exact question or result. Improve the process, not merely the summary.
-
-## Repository work
-
-Keep source PDFs, exam papers, answers, personal study records, account data and transcripts out of public commits. `courses/` and `private/` are ignored. Do not import another tool's implementation without checking its license. Use standard-library Python and run the regression suite after code changes. Public publishing requires the user's authorization; creating a local course does not authorize publishing it.
+Keep PDFs, answer keys, personal responses, transcripts and account data in ignored `courses/` or `private/`. Public changes contain reusable material and synthetic examples. Run the regression suite after code or export changes. Preserve upstream attribution and licenses. Publishing requires the user's authorization; local learning does not imply publication permission.

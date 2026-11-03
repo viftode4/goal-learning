@@ -1,0 +1,74 @@
+{
+  "format_version": 1,
+  "entrypoint": "AGENTS.md",
+  "skill": "skills/goal-learning/SKILL.md",
+  "human_overview": "README.md",
+  "state_policy": "Read the current private ledger, latest handoff and referenced records. Resume a pending unanswered question before choosing a new activity. Never infer state from this public index.",
+  "routes": [
+    {
+      "task": "start_goal",
+      "read": [
+        "docs/QUICKSTART.md",
+        "docs/WORKFLOW.md"
+      ]
+    },
+    {
+      "task": "allocate_activity",
+      "read": [
+        "docs/TOPIC-ALLOCATION.md"
+      ]
+    },
+    {
+      "task": "commands_and_ledger",
+      "read": [
+        "docs/AGENT-REFERENCE.md"
+      ],
+      "examples": [
+        "examples/course.json",
+        "examples/allocation.json"
+      ]
+    },
+    {
+      "task": "assess_and_record",
+      "read": [
+        "docs/WORKFLOW.md"
+      ],
+      "templates": [
+        "templates/ASSESSMENT.json",
+        "templates/SESSION.md"
+      ]
+    },
+    {
+      "task": "resume_or_change_agents",
+      "read": [
+        "docs/AGENT-PORTABILITY.md"
+      ],
+      "templates": [
+        "templates/HANDOFF.json"
+      ]
+    },
+    {
+      "task": "exam_preparation",
+      "read": [
+        "docs/EXAM-WORKFLOW.md"
+      ]
+    },
+    {
+      "task": "research_and_attribution",
+      "read": [
+        "docs/METHODS.md",
+        "docs/PROVENANCE.md"
+      ]
+    },
+    {
+      "task": "maintain_or_evaluate",
+      "read": [
+        "docs/MAINTAINING.md",
+        "docs/IMPROVEMENTS.md"
+      ],
+      "cases": [
+        "evals/tutor-cases.json"
+      ]
+    }
+  ]
+}

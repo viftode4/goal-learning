@@ -1,61 +1,78 @@
+![Goal Learning: learn toward something real. Cover required material, explore uncertainty, practice weaknesses, and refresh what seems strong.](docs/assets/goal-learning.svg)
+
+<p align="center">
+  <a href="docs/QUICKSTART.md">Start learning</a> ·
+  <a href="AGENTS.md">For agents</a> ·
+  <a href="docs/METHODS.md">Methods & evidence</a> ·
+  <a href="docs/PROVENANCE.md">Origins</a>
+</p>
+
 # Goal Learning
 
-Learn toward a concrete goal with a source-grounded AI tutor, an explicit coverage map, and evidence of what you can do independently. Use it for an exam, a technical skill, a project, or understanding a field.
+**A practical way to learn with an AI tutor, toward something you can do on your own.**
 
-This repository brings together a portable tutoring skill, a small local tool, source provenance, research references, and lessons from an actual preparation session. It is a new workflow, not a validated claim to teach anything or guarantee a result.
+Choose an outcome: pass an exam, build a parser, explain a paper, or learn a technical skill. Map what it requires. Work through it in small steps. Keep a record of what you can actually do, so the next session starts from evidence.
 
-## Start with a goal
+## A good conversation should lead somewhere
 
-Python 3.10+, no dependencies or API keys:
+An explanation can feel clear while you are reading it. A familiar practice question can feel easy. Neither tells you whether you can solve a different problem tomorrow.
 
-```sh
-python3 study.py init build-a-parser --title "Build a parser" --goal "Independently implement and explain a small expression parser"
-python3 study.py status courses/build-a-parser/course.json
-python3 study.py plan courses/build-a-parser/course.json
-python3 study.py audit courses/build-a-parser/course.json
+Goal Learning keeps three things visible:
+
+| The goal | The coverage | The evidence |
+| --- | --- | --- |
+| What you want to do independently | What needs learning, and what has been taught | What you did, how much help you needed, and what still needs checking |
+
+That separation matters. A topic can be covered but still uncertain. A correct answer after hints can be useful progress without being independent mastery.
+
+## Pick the next step for a reason
+
+The tutor balances four kinds of activity. There is no fixed exploration quota.
+
+| Activity | When it helps | What happens |
+| --- | --- | --- |
+| **Cover** | Required material is still untouched | Explain the idea and work a complete example |
+| **Explore** | Understanding is uncertain | Try a small, fair question to find out where you stand |
+| **Practice** | A response reveals a weakness | Repair the gap and try a variation with less help |
+| **Refresh** | Something seems strong but has gone unchecked | Sample it again, without assuming it has been forgotten |
+
+A time limit changes priorities openly. Sample questions help test the map; they do not decide what belongs in it.
+
+## Small sessions. A longer thread.
+
+```mermaid
+flowchart LR
+    G[Choose a goal] --> M[Map the scope]
+    M --> N[Choose the next activity]
+    N --> T[Explain, demonstrate, try]
+    T --> E[Record the evidence]
+    E --> N
 ```
 
-The initial audit intentionally fails. Edit the ledger: define observable success criteria, inventory sources and required capabilities, and record evidence as you learn. See [the synthetic example](examples/course.json) and [the workflow](docs/WORKFLOW.md). `courses/` is a local workspace name for any learning goal, not just academic courses.
+For a beginner, a session starts with an explanation and a worked example, then one manageable check. The tutor records the actual response and any help, adjusts the next activity, and saves a clear place to resume.
 
-## Use with an assistant
+The record belongs to the learning goal. Another agent can pick it up without depending on the previous agent's hidden memory.
 
-Open this repository and say:
+## Use it with the agent you have
 
-> Use skills/goal-learning/SKILL.md. My goal is [outcome], my starting point is [experience], and I have [constraints]. Inspect the resources, build a complete capability map, and teach one small part at a time. Keep scope, coverage and demonstrated ability separate.
+Give your agent access to this repository and say:
 
-[AGENTS.md](AGENTS.md) applies to Codex; [CLAUDE.md](CLAUDE.md) points Claude to the same instructions. Any assistant can follow the files directly. This repository does not change global agent configuration or install itself automatically.
+> Follow AGENTS.md. Help me learn **[goal]**, starting from **[experience]**, with **[constraints]**. Map the scope before teaching, work one small part at a time, and keep coverage separate from demonstrated ability.
 
-The [portable skill](skills/goal-learning/SKILL.md) can be used directly or exported as a self-contained folder:
+The protocol is Markdown and JSON. Optional Python tools check the ledger, suggest a next activity, and export a self-contained skill. No API keys or third-party Python packages are required. Agents without command execution can follow the same policy manually.
 
-```sh
-python3 study.py bundle ../goal-learning-skill
-```
+**[Start a goal →](docs/QUICKSTART.md)** &nbsp; **[Use another agent →](docs/AGENT-PORTABILITY.md)**
 
-Copy that entire folder into your agent's configured skills directory, or tell any agent to read its SKILL.md. No vendor-specific installation is required. File-only agents can follow the policy manually; chat-only agents need the relevant files supplied in the conversation. See [agent portability and handoffs](docs/AGENT-PORTABILITY.md). Automatic discovery and teaching quality vary by client; the exported file layout and CLI are tested.
+## What this does and does not establish
 
-## What is bundled
+The methods draw on retrieval practice, worked examples, feedback and related learning research. The combined workflow and its allocation heuristic have not been validated as a learning intervention. The checker cannot discover every omitted topic or decide whether a tutor graded well.
 
-- [Workflow](docs/WORKFLOW.md): goals, sources, prerequisites, teaching, evidence and resuming.
-- [Topic allocation](docs/TOPIC-ALLOCATION.md): required coverage, exploration, targeted practice and refresh, with transparent read-only recommendations.
-- [Agent portability](docs/AGENT-PORTABILITY.md) and a shared [handoff template](templates/HANDOFF.json).
-- [Provenance](docs/PROVENANCE.md): upstream projects, exact versions and what actually ran.
-- [Methods and sources](docs/METHODS.md): research basis, methods used, limits and untested proposals.
-- [Exam guide](docs/EXAM-WORKFLOW.md) and [RecSys retrospective](docs/RECSYS-RETROSPECTIVE.md).
-- [Improvement plan](docs/IMPROVEMENTS.md) and [behavioral evaluation cases](evals/tutor-cases.json).
-- [Session](templates/SESSION.md), [assessment](templates/ASSESSMENT.json) and [debrief](templates/DEBRIEF.md) templates.
-- A standard-library CLI for initialization, status, coverage checks, next-activity planning and portable export. It does not grade answers or run spaced repetition.
+A passing audit means the declared coverage checks passed. It does not predict a grade or prove mastery. Personal materials, responses and transcripts stay outside the public repository.
 
-## What an audit means
+---
 
-```sh
-python3 study.py audit courses/build-a-parser/course.json
-python3 -m unittest discover -s tests -v
-```
+**Understand the approach** · [Workflow](docs/WORKFLOW.md) · [Topic allocation](docs/TOPIC-ALLOCATION.md) · [Research and limits](docs/METHODS.md)
 
-An audit fails for missing goal criteria, an unchecked source inventory, unknown scope, missing references, shallow included topics, or unsupported evidence metadata. It checks the declared ledger. It cannot discover omitted concepts, verify grading, or certify mastery. A human/tutor must reconcile sources and real task requirements against the map first.
+**Inspect its origins** · [Upstream projects](docs/PROVENANCE.md) · [What went wrong in the first exam prep](docs/RECSYS-RETROSPECTIVE.md) · [What to improve next](docs/IMPROVEMENTS.md)
 
-Coverage reports and evidence reports stay separate. A worked example counts as delivered coverage, not independent performance. A passing coverage audit is not a completion or grade prediction. Test the actual goal independently before reporting success.
-
-## Keep personal work private
-
-The public repository contains reusable instructions, tooling and synthetic examples. Course files, PDFs, answers, personal responses and transcripts belong in ignored `courses/` or `private/`, with a separate private backup if needed. See [maintenance](docs/MAINTAINING.md). Existing RecSys materials and detailed state remain in their original private workspace.
+**Work on the system** · [Agent file index](agent-index.json) · [Commands and data](docs/AGENT-REFERENCE.md) · [Maintaining the repo](docs/MAINTAINING.md) · [Contributing](CONTRIBUTING.md)

@@ -210,7 +210,7 @@ def bundle(destination):
     if destination == root or root in destination.parents:
         raise ValueError('Export outside the source repository to avoid recursive or private copies.')
     destination.mkdir(parents=True, exist_ok=False)
-    for name in ('README.md', 'AGENTS.md', 'CLAUDE.md', 'LICENSE', '.gitignore', 'study.py'):
+    for name in ('README.md', 'AGENTS.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'LICENSE', '.gitignore', 'study.py', 'agent-index.json'):
         shutil.copyfile(root / name, destination / name)
     for name in ('docs', 'templates', 'examples', 'evals', 'THIRD_PARTY_NOTICES'):
         shutil.copytree(root / name, destination / name)
@@ -221,6 +221,10 @@ def bundle(destination):
     (destination / 'SKILL.md').write_text(skill)
     for path in destination.rglob('*.md'):
         path.write_text(path.read_text().replace('skills/goal-learning/SKILL.md', 'SKILL.md'))
+    index_path = destination / 'agent-index.json'
+    index = json.loads(index_path.read_text())
+    index['skill'] = 'SKILL.md'
+    index_path.write_text(json.dumps(index, indent=2) + '\n')
     return destination
 
 

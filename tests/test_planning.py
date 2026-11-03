@@ -13,6 +13,16 @@ from test_study import ledger
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def assert_agent_routes(test, root):
+    index = json.loads((root / 'agent-index.json').read_text())
+    paths = [index['entrypoint'], index['skill'], index['human_overview']]
+    for route in index['routes']:
+        for kind in ('read', 'examples', 'templates', 'cases'):
+            paths.extend(route.get(kind, []))
+    for name in paths:
+        test.assertTrue((root / name).is_file(), name)
+
+
 def event(topic, result='correct', hint=0, purpose='explore', identifier='event-1'):
     return {'id': identifier, 'topic_id': topic, 'purpose': purpose, 'result': result,
             'hint_level': hint, 'record_ref': 'sessions/real-response.json'}
@@ -128,6 +138,9 @@ class PlanningTests(unittest.TestCase):
 
 
 class PortableBundleTests(unittest.TestCase):
+    def test_agent_index_resolves_in_the_repository(self):
+        assert_agent_routes(self, ROOT)
+
     def test_bundle_works_when_copied_without_the_original_repository(self):
         with tempfile.TemporaryDirectory() as temporary:
             target = Path(temporary) / 'goal-learning'
@@ -136,6 +149,8 @@ class PortableBundleTests(unittest.TestCase):
             self.assertFalse((target / 'courses').exists())
             self.assertFalse((target / 'private').exists())
             self.assertFalse((target / '.git').exists())
+            assert_agent_routes(self, target)
+            self.assertEqual(json.loads((target / 'agent-index.json').read_text())['skill'], 'SKILL.md')
             for path in target.rglob('*.md'):
                 for link in re.findall(r'\]\(([^)]+)\)', path.read_text()):
                     if '://' not in link and not link.startswith('#'):
@@ -150,6 +165,7 @@ class PortableBundleTests(unittest.TestCase):
             subprocess.run([sys.executable, str(target / 'study.py'), 'bundle', str(reexport)], check=True, capture_output=True)
             self.assertTrue((reexport / 'SKILL.md').is_file())
             self.assertFalse((reexport / 'courses').exists())
+            assert_agent_routes(self, reexport)
             with self.assertRaises(FileExistsError):
                 study.bundle(target)
 

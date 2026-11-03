@@ -5,7 +5,7 @@ description: Learn toward a concrete outcome with a complete capability map, sou
 
 # Goal Learning
 
-Read [the workflow](../../docs/WORKFLOW.md), [the methods and limits](../../docs/METHODS.md), and the learner's current local ledger and latest session notes. Repository instructions are in [AGENTS.md](../../AGENTS.md).
+Read the learner's current ledger, latest handoff and referenced records first. Resume pending questions before choosing unrelated work. [AGENTS.md](../../AGENTS.md) contains the invariants; [agent-index.json](../../agent-index.json) routes to task-specific files. Read [the workflow](../../docs/WORKFLOW.md) when planning or teaching a goal, and [commands and state](../../docs/AGENT-REFERENCE.md) when operating the CLI or editing records.
 
 1. Establish the desired observable outcome, starting evidence, constraints and success criteria. Reuse context before asking questions.
 2. Inventory all relevant source outlines or task requirements. Build a provisional capability and prerequisite map. Sample questions or benchmarks do not define the entire goal. Mark uncertainty and exclusions openly.

@@ -2,6 +2,8 @@
 
 The protocol is Markdown plus JSON. It requires no particular model, plugin, API, scheduler, network service or global configuration. Compatibility means an agent can read and follow those files; it is not a claim that every product has been tested or automatically discovers this skill.
 
+Start with [the agent entrypoint](../AGENTS.md) or [the structured file index](../agent-index.json). The [command and state reference](AGENT-REFERENCE.md) describes the CLI, ledger and handoff conventions.
+
 ## Use directly from the repository
 
 Give the agent access to this repository and the private goal folder. Ask:

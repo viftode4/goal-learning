@@ -7,3 +7,5 @@ For a new goal or course, initialize a folder, inventory sources and edit the le
 Run `python3 -m unittest discover -s tests -v` before committing code. Inspect `git diff --cached` and `git ls-files` before publishing. Never force-add ignored course folders merely to back up private work. Ignoring a file does not remove it from existing Git history.
 
 The checker is intentionally small. Add scheduling, extraction or interfaces only when an actual need justifies them. Prefer linking an established private runtime to copying a vendor dependency into this repository.
+
+Keep README.md focused on concepts and the learning experience. Put setup instructions in QUICKSTART.md and command/data details in AGENT-REFERENCE.md. Update agent-index.json and AGENTS.md when a route changes. The exporter must carry the index and its rewritten skill path into an independent bundle. Keep public documentation references relative so they work both in GitHub and in an exported skill.
